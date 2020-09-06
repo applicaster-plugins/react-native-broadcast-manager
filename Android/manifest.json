@@ -9,7 +9,8 @@
   "dependency_repository_url": [],
   "dependency_name": "@applicaster/react-native-broadcast-manager",
   "dependency_version": "0.1.2",
-  "platform": "android",
+  "platform": "android_tv_for_quickbrick",
+  "ui_frameworks": ["quickbrick"],
   "author_name": "Merav Zanany",
   "author_email": "m.zanany@applicaster.com",
   "manifest_version": "0.1.2",
@@ -26,7 +27,11 @@
   "react_bundle_url": "",
   "extra_dependencies": [],
   "npm_dependencies": ["@applicaster/react-native-broadcast-manager@0.1.2"],
-  "project_dependencies": [ ],
+  "project_dependencies": [
+    {
+      "react-native-broadcast-manager": "./quick_brick/node_modules/@applicaster/react-native-broadcast-manager/android"
+    }
+  ],
   "targets": ["tv"],
   "custom_configuration_fields": [ ]
 }
