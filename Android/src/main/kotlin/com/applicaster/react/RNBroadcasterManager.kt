@@ -19,10 +19,13 @@ class RNBroadcasterManager(reactContext: ReactApplicationContext) : ReactContext
     }
 
     @ReactMethod
-    fun sendBroadcastEvent(eventName: String, properties: ReadableMap) {
+    fun sendBroadcastEvent(eventName: String, properties: ReadableMap?) {
         val intent = Intent(SEND_BROADCAST_ACTION)
         intent.putExtra(EVENT_NAME, eventName)
-        intent.putExtra(EVENT_PROPERTIES, properties.toHashMap().toString())
+        properties?.let {
+            intent.putExtra(EVENT_PROPERTIES, it.toHashMap().toString())
+        }
+
         LocalBroadcastManager.getInstance(reactApplicationContext).sendBroadcast(intent)
     }
 }
