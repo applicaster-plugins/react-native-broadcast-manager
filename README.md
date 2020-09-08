@@ -31,6 +31,7 @@ None
 ```
 
 2. Add the following lines in its' manifest:
+```
 "project_dependencies": [
     {
       "react-native-broadcast-manager": "./quick_brick/node_modules/@applicaster/react-native-broadcast-manager/Android"
