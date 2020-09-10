@@ -1,0 +1,14 @@
+{
+  "name": "@applicaster/react-native-broadcast-manager",
+  "version": "0.1.2",
+  "description": "Adds custom bridge that enables React Native side to send a broadcast to the native side.",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Applicaster",
+  "license": "MIT",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/applicaster-plugins/react-native-broadcast-manager.git"
+  }
+}
