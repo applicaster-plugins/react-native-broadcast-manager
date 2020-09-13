@@ -1,6 +1,6 @@
 {
   "name": "@applicaster/react-native-broadcast-manager",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Adds custom bridge that enables React Native side to send a broadcast to the native side.",
   "main": "index.js",
   "scripts": {},
