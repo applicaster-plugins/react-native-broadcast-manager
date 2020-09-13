@@ -7,9 +7,9 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableMap
 
-class RNBroadcasterManager(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext){
+class BroadcastManager(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext){
 
-    val TAG = "RNBroadcasterManager"
+    val TAG = "BroadcastManager"
     val SEND_BROADCAST_ACTION = "send_broadcast_from_rn"
     val EVENT_NAME = "event_name"
     val EVENT_PROPERTIES = "event_properties"
