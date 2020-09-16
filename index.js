@@ -1,2 +1,2 @@
 import { NativeModules } from 'react-native';
-module.exports = NativeModules.RNBroadcasterManager;
+module.exports = NativeModules.BroadcastManager;
