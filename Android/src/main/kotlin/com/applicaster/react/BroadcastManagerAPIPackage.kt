@@ -8,11 +8,11 @@ import com.facebook.react.uimanager.ReactShadowNode
 import com.facebook.react.uimanager.ViewManager
 import java.util.*
 
-class RNBroadcastManagerAPIPackage : ReactPackage {
+class BroadcastManagerAPIPackage : ReactPackage {
 
     override fun createNativeModules(reactContext: ReactApplicationContext): MutableList<NativeModule> {
         val modules: MutableList<NativeModule> = ArrayList()
-        modules.add(RNBroadcasterManager(reactContext))
+        modules.add(BroadcastManager(reactContext))
 
         return modules
     }
