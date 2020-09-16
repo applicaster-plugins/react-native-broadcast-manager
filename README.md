@@ -3,7 +3,7 @@
 *Built by Applicaster*
 
 **Supports:** *iOS and Android*
-*Current Version: 0.1.2 (Android) and 0.1.0 (iOS)*
+*Current Version: 0.2.0 (Android) and 0.1.0 (iOS)*
 
 ## About
 
@@ -40,8 +40,9 @@ None
 ```
 and in the manifest's api section:
 ```
+"class_name": "******", (if don't have class to initiate the plugin use "com.applicaster.reactnative.plugins.APReactNativeAdapter")
 "react_packages": [
-      "com.applicaster.react.RNBroadcastManagerAPIPackage"
+      "com.applicaster.react.BroadcastManagerAPIPackage"
     ]
 ```
 3. Add the following import in the relevant js file:
