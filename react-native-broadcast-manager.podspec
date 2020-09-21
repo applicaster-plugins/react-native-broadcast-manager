@@ -10,12 +10,13 @@ Pod::Spec.new do |s|
   s.license      = package["license"]
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "9.0" }
-  s.source       = { :git => "https://github.com/applicaster-plugins/react-native-broadcast-manager.git", :tag => "#{s.version}" }
+  s.platforms    = {  :ios => "9.0", :tvOS => "10.0" }
+  s.tvos.deployment_target = "10.0"
+  s.ios.deployment_target = '9.0'
 
+  s.source       = { :git => "https://github.com/applicaster-plugins/react-native-broadcast-manager.git", :tag => "#{s.version}" }
   
   s.source_files = "ios/**/*.{h,m,mm,swift}"
   
-
   s.dependency "React"
 end
