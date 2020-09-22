@@ -1,84 +1,138 @@
-# quick-brick-broadcast-manager
+# react-native-broadcast-manager
 
-*Built by Applicaster*
+A bridge for sending broadcast events from react-native to native code
 
-**Supports:** *iOS and Android*
-*Current Version: 0.2.0 (Android) and 0.1.0 (iOS)*
+**Author:** Applicaster LTD
 
-## About
-
-A bridge for sending a broadcast from RN code to native code
-
-### When to use?
-
-Use this plugin when you need to send general data between rn and native modules
+**Platform Support:** iOS, tvOS, Android, AndroidTV
 
 ## Process description
+
 After registering to the ```send_broadcast_from_rn``` intent action in the Native side, we can use the
 ```sendBroadcastEvent``` ReactMethod in our RN code to send any event we want (including event properties
 as a JSON Object).
 
-## Configuration
+## Usage (RN Side)
 
-None
+Call sendBroadcastEvent with an event_key (String) and even_properties (type JSON) that later can be caught in the native code and handled upon receiving.
 
+1. Add the dependency to your `package.json` file:
 
-## Usage (RN Side):
-
-1. Add as a dependency in your rn package:
-```
-"@applicaster/react-native-broadcast-manager":x.x.x
+```js
+"@applicaster/react-native-broadcast-manager":0.2.3
 ```
 
-2. Add the following lines in its' manifest:
-```
-"project_dependencies": [
-    {
-      "react-native-broadcast-manager": "./quick_brick/node_modules/@applicaster/react-native-broadcast-manager/Android"
-    }
+2. Send a broadcast message
+
+  ```js
+  import { sendBroadcastEvent } from '@applicaster/react-native-broadcast-manager';
+
+  // ...
+
+  sendBroadcastEvent("someEventName", {
+    "key_1" : "value_1",
+    "key_2" : "value_2",
+    //...
+    "key_n" : "value_n"
+  });
+  ```
+
+## Manifest file setup (Applicaster plugin developers only)
+
+If you a working applicaster plugin then following configuration to your manifest file.
+
+```js
+//For all platforms
+"api": {
+  //..
+  "react_packages": [
+    //..
+    //Add the following to the bottom of the list.
+    "com.applicaster.react.BroadcastManagerAPIPackage"
   ]
-```
-and in the manifest's api section:
-```
-"class_name": "******", (if don't have class to initiate the plugin use "com.applicaster.reactnative.plugins.APReactNativeAdapter")
-"react_packages": [
-      "com.applicaster.react.BroadcastManagerAPIPackage"
-    ]
-```
-3. Add the following import in the relevant js file:
-```
-import { sendBroadcastEvent } from '@applicaster/react-native-broadcast-manager';
+}
+
+//...
+
+//Only for iOS/tvOS
+"extra_dependencies": [
+  {
+    "react-native-broadcast-manager": ":path => './node_modules/@applicaster/react-native-broadcast-manager'"
+  }
+],
+//For all platforms
+"npm_dependencies": [
+  "@applicaster/react-native-broadcast-manager@^0.2.3"
+],
+//Only for Android/AndroidTV plugins
+"project_dependencies": [
+  {
+    "react-native-broadcast-manager": "./node_modules/@applicaster/react-native-broadcast-manager/Android"
+  }
+]
 ```
 
-After that you can call sendBroadcastEvent with an event_key (String) and even_properties (type JSON) that later can be caught in
-the native code and handled upon receiving.
+## Usage (Android)
 
-## Usage (Android):
+Catch the event in your native project by adding the following code:
 
-In the native module we add the following lines:
-```
+```java
+    public static final String EVENT_NAME = "event_name";
+    public static final String EVENT_PROPERTIES = "event_properties";
+    //..
+
     public static final String SEND_BROADCAST_ACTION = "send_broadcast_from_rn";
 
     // Catch the send_broadcast_from_rn action sent from the RN Broadcast Manager
     LocalBroadcastManager.getInstance(context).registerReceiver(new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            <Enter desired code here>
+                try {
+                  //Filter for the intent you sent in the r.n side
+                  if ("someEventName".equals(intent.getStringExtra(EVENT_NAME))) {
+                    //Get the event properties
+                    val event_properties = new JSONObject(intent.getStringExtra(EVENT_PROPERTIES));
+                    //Add more logic here
+                  }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
         }
     }, new IntentFilter(SEND_BROADCAST_ACTION));
 ```
 
-## Usage (iOS):
+## Usage (iOS)
+
+Catch the event in your native project by adding the following code:
+
+```swift
+  private let SomeEventName = Notification.Name("someEventName")
+
+  //..
+
+  //Listen to react native broadcase events,
+  //Don't forget to release it on deinit!
+  NotificationCenter.default.addObserver(self,
+                selector: #selector(didReceiveEvent(_:)),
+                name: SomeEventName,
+                object: nil)
+
+  //..
+
+  @objc func didReceiveEvent(_ notification:Notification) {
+    if let userInfo = notification.userInfo as [String: Any] {
+      /*
+      The userInfo will contain a dictionary with the JSONObject you sent in the React-Native Part.
+      */
+
+      //Add more logic here.
+    }
+  }
 
 
+```
 
-# Deployment
+## License
 
-1. Update version for desired module to deploy:
-```
-$MODULE/package.json
-```
-2. Deploy from the shell to npm:
-```
-NPM_TOKEN=$NPM_TOKEN npm publish
-```
+MIT
