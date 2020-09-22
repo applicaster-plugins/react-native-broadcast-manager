@@ -6,70 +6,58 @@ A bridge for sending broadcast events from react-native to native code
 
 **Platform Support:** iOS, tvOS, Android, AndroidTV
 
-## Process description
-
-After registering to the ```send_broadcast_from_rn``` intent action in the Native side, we can use the
-```sendBroadcastEvent``` ReactMethod in our RN code to send any event we want (including event properties
-as a JSON Object).
-
 ## Usage (RN Side)
 
 Call sendBroadcastEvent with an event_key (String) and even_properties (type JSON) that later can be caught in the native code and handled upon receiving.
 
 1. Add the dependency to your `package.json` file:
 
-```js
-"@applicaster/react-native-broadcast-manager":0.2.3
-```
+    ```js
+    "@applicaster/react-native-broadcast-manager":0.2.3
+    ```
 
 2. Send a broadcast message
 
-  ```js
-  import { sendBroadcastEvent } from '@applicaster/react-native-broadcast-manager';
+    ```js
+    import { sendBroadcastEvent } from '@applicaster/react-native-broadcast-manager';
 
-  // ...
+    // ...
 
-  sendBroadcastEvent("someEventName", {
-    "key_1" : "value_1",
-    "key_2" : "value_2",
-    //...
-    "key_n" : "value_n"
-  });
-  ```
+    sendBroadcastEvent("someEventName", {
+      "key_1" : "value_1",
+      "key_2" : "value_2",
+      //...
+      "key_n" : "value_n"
+    });
+    ```
 
-## Manifest file setup (Applicaster plugin developers only)
+## Usage (iOS)
 
-If you a working applicaster plugin then following configuration to your manifest file.
+Catch the event in your native project by adding the following code:
 
-```js
-//For all platforms
-"api": {
+```swift
+  private let SomeEventName = Notification.Name("someEventName")
+
   //..
-  "react_packages": [
-    //..
-    //Add the following to the bottom of the list.
-    "com.applicaster.react.BroadcastManagerAPIPackage"
-  ]
-}
 
-//...
+  //Listen to react native broadcase events,
+  //Don't forget to release it on deinit!
+  NotificationCenter.default.addObserver(self,
+                selector: #selector(didReceiveEvent(_:)),
+                name: SomeEventName,
+                object: nil)
 
-//Only for iOS/tvOS
-"extra_dependencies": [
-  {
-    "react-native-broadcast-manager": ":path => './node_modules/@applicaster/react-native-broadcast-manager'"
+  //..
+
+  @objc func didReceiveEvent(_ notification:Notification) {
+    if let userInfo = notification.userInfo as [String: Any] {
+      /*
+      The userInfo will contain a dictionary with the JSONObject you sent in the React-Native side.
+      */
+
+      //Add more logic here.
+    }
   }
-],
-//For all platforms
-"npm_dependencies": [
-  "@applicaster/react-native-broadcast-manager@^0.2.3"
-],
-//Only for Android/AndroidTV plugins
-"project_dependencies": [
-  {
-    "react-native-broadcast-manager": "./node_modules/@applicaster/react-native-broadcast-manager/Android"
-  }
-]
 ```
 
 ## Usage (Android)
@@ -102,35 +90,39 @@ Catch the event in your native project by adding the following code:
     }, new IntentFilter(SEND_BROADCAST_ACTION));
 ```
 
-## Usage (iOS)
+## Manifest file setup (for Applicaster plugins only)
 
-Catch the event in your native project by adding the following code:
+If you a working applicaster plugin then following configuration to your manifest file.
 
-```swift
-  private let SomeEventName = Notification.Name("someEventName")
-
+```js
+//For all platforms
+"api": {
   //..
+  "react_packages": [
+    //..
+    //Add the following to the bottom of the list.
+    "com.applicaster.react.BroadcastManagerAPIPackage"
+  ]
+}
 
-  //Listen to react native broadcase events,
-  //Don't forget to release it on deinit!
-  NotificationCenter.default.addObserver(self,
-                selector: #selector(didReceiveEvent(_:)),
-                name: SomeEventName,
-                object: nil)
+//...
 
-  //..
-
-  @objc func didReceiveEvent(_ notification:Notification) {
-    if let userInfo = notification.userInfo as [String: Any] {
-      /*
-      The userInfo will contain a dictionary with the JSONObject you sent in the React-Native Part.
-      */
-
-      //Add more logic here.
-    }
+//Only for iOS/tvOS
+"extra_dependencies": [
+  {
+    "react-native-broadcast-manager": ":path => './node_modules/@applicaster/react-native-broadcast-manager'"
   }
-
-
+],
+//For all platforms
+"npm_dependencies": [
+  "@applicaster/react-native-broadcast-manager@^0.2.3"
+],
+//Only for Android/AndroidTV plugins
+"project_dependencies": [
+  {
+    "react-native-broadcast-manager": "./node_modules/@applicaster/react-native-broadcast-manager/Android"
+  }
+]
 ```
 
 ## License
