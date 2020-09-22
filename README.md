@@ -92,7 +92,7 @@ Catch the event in your native project by adding the following code:
 
 ## Manifest file setup (for Applicaster plugins only)
 
-If you a working applicaster plugin then following configuration to your manifest file.
+If you a working applicaster plugin then add the following configuration to your manifest file.
 
 ```js
 //For all platforms
