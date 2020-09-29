@@ -19,7 +19,7 @@ Call sendBroadcastEvent with an event_key (String) and even_properties (type JSO
 2. Send a broadcast message
 
     ```js
-    import { sendBroadcastEvent } from '@applicaster/react-native-broadcast-manager';
+    import { sendBroadcastEvent } from 'react-native-broadcast-manager';
 
     // ...
 
@@ -110,17 +110,17 @@ If you a working a Applicaster plugin then add the following configuration to yo
 //Only for iOS/tvOS
 "extra_dependencies": [
   {
-    "react-native-broadcast-manager": ":path => './node_modules/@applicaster/react-native-broadcast-manager'"
+    "react-native-broadcast-manager": ":path => './node_modules/react-native-broadcast-manager'"
   }
 ],
 //For all platforms
 "npm_dependencies": [
-  "@applicaster/react-native-broadcast-manager@^0.2.3"
+  "react-native-broadcast-manager@^0.2.3"
 ],
 //Only for Android/AndroidTV plugins
 "project_dependencies": [
   {
-    "react-native-broadcast-manager": "./node_modules/@applicaster/react-native-broadcast-manager/Android"
+    "react-native-broadcast-manager": "./node_modules/react-native-broadcast-manager/Android"
   }
 ]
 ```
