@@ -13,7 +13,7 @@ Call sendBroadcastEvent with an event_key (String) and even_properties (type JSO
 1. Add the dependency to your `package.json` file:
 
     ```js
-    "react-native-broadcast-manager":0.2.3
+    "react-native-broadcast-manager":0.2.4
     ```
 
 2. Send a broadcast message
@@ -115,7 +115,7 @@ If you a working a Applicaster plugin then add the following configuration to yo
 ],
 //For all platforms
 "npm_dependencies": [
-  "react-native-broadcast-manager@^0.2.3"
+  "react-native-broadcast-manager@^0.2.4"
 ],
 //Only for Android/AndroidTV plugins
 "project_dependencies": [
