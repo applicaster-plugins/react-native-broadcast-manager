@@ -6,6 +6,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.ReadableMap
+import org.json.JSONObject
 
 class BroadcastManager(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext){
 
@@ -23,7 +24,7 @@ class BroadcastManager(reactContext: ReactApplicationContext) : ReactContextBase
         val intent = Intent(SEND_BROADCAST_ACTION)
         intent.putExtra(EVENT_NAME, eventName)
         properties?.let {
-            intent.putExtra(EVENT_PROPERTIES, it.toHashMap().toString())
+            intent.putExtra(EVENT_PROPERTIES, JSONObject(it.toHashMap()).toString())
         }
 
         LocalBroadcastManager.getInstance(reactApplicationContext).sendBroadcast(intent)
