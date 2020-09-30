@@ -23,7 +23,7 @@ class BroadcastManager(reactContext: ReactApplicationContext) : ReactContextBase
         val intent = Intent(SEND_BROADCAST_ACTION)
         intent.putExtra(EVENT_NAME, eventName)
         properties?.let {
-            intent.putExtra(EVENT_PROPERTIES, it.toHashMap().toString())
+            intent.putExtra(EVENT_PROPERTIES, JSONObject(it.toHashMap()).toString())
         }
 
         LocalBroadcastManager.getInstance(reactApplicationContext).sendBroadcast(intent)
