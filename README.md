@@ -94,10 +94,36 @@ Catch the event in your native project by adding the following code:
 
 ## Manifest file setup (for Applicaster plugins only)
 
-If you a working a Applicaster plugin then add the following configuration to your manifest file.
+If you working with an Applicaster plugin then add the following configuration to your manifest file.
+
+* Android / Android TV
 
 ```js
-//For all platforms
+"api": {
+  //..
+  “class_name”: “com.applicaster.reactnative.plugins.APReactNativeAdapter”,
+  "react_packages": [
+    //..
+    //Add the following to the bottom of the list.
+    "com.applicaster.react.BroadcastManagerAPIPackage"
+  ]
+},
+/* ... */
+"npm_dependencies": [
+  "@applicaster/react-native-broadcast-manager"
+],
+/* ... */
+"project_dependencies": [
+  {
+    "react-native-broadcast-manager": "./node_modules/@applicaster/react-native-broadcast-manager/Android"
+  }
+],
+/* ... */
+```
+
+* iOS / tvOS
+
+```js
 "api": {
   //..
   "react_packages": [
@@ -106,25 +132,17 @@ If you a working a Applicaster plugin then add the following configuration to yo
     "com.applicaster.react.BroadcastManagerAPIPackage"
   ]
 }
-
-//...
-
-//Only for iOS/tvOS
+/* ... */
 "extra_dependencies": [
   {
     "react-native-broadcast-manager": ":path => './node_modules/@applicaster/react-native-broadcast-manager'"
   }
 ],
-//For all platforms
+/* ... */
 "npm_dependencies": [
   "@applicaster/react-native-broadcast-manager"
 ],
-//Only for Android/AndroidTV plugins
-"project_dependencies": [
-  {
-    "react-native-broadcast-manager": "./node_modules/@applicaster/react-native-broadcast-manager/Android"
-  }
-]
+/* ... */
 ```
 
 ## License
