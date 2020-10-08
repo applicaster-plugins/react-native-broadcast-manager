@@ -124,14 +124,6 @@ If you working with an Applicaster plugin then add the following configuration t
 * iOS / tvOS
 
 ```js
-"api": {
-  //..
-  "react_packages": [
-    //..
-    //Add the following to the bottom of the list.
-    "com.applicaster.react.BroadcastManagerAPIPackage"
-  ]
-}
 /* ... */
 "extra_dependencies": [
   {
